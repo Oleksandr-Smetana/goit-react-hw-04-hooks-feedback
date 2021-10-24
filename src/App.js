@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Section from './components/Section/Section';
 import FeedbackOptions from './components/FeedbackOptions';
@@ -12,8 +13,8 @@ export default function Feedback() {
   const [bad, setBad] = useState(0);
 
   // добавляет +1 отзыв в блок статистики при клике на кнопки
-  const leaveFeedback = name => {
-    switch (name) {
+  const leaveFeedback = btnName => {
+    switch (btnName) {
       case 'good':
         return setGood(good + 1);
 
@@ -28,14 +29,14 @@ export default function Feedback() {
   };
 
   // определяет общее количество отзывов
-  function getTotalFeedback() {
+  const getTotalFeedback = () => {
     return good + neutral + bad;
-  }
+  };
 
   // определяет процент положительных отзывов
-  function getPositiveFeedbackPercentage() {
+  const getPositiveFeedbackPercentage = () => {
     return Math.round((good / getTotalFeedback()) * 100);
-  }
+  };
 
   const key = Object.keys({ good, neutral, bad });
   return (
@@ -54,9 +55,13 @@ export default function Feedback() {
             positivePercentage={getPositiveFeedbackPercentage()}
           />
         ) : (
-          <Notification message="No feedback given" />
+          <Notification message="No feedback given." />
         )}
       </Section>
     </div>
   );
 }
+
+Feedback.propTypes = {
+  item: PropTypes.string,
+};
